@@ -1,0 +1,131 @@
+-- need to add entity, and end process/ end behavior at end still
+
+
+ARCHITECTURE behavior OF hw_image_generator IS
+BEGIN
+	--PROCESS(max10_clk)
+	process(disp_ena, row, column)
+	 BEGIN
+
+IF(disp_ena = '1' ) THEN 
+ 
+      IF(column < 20) THEN -- left edge
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+     ELSIF(row < 20) THEN -- top edge
+       red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+	  ELSIF(column < 85 AND column > 45 AND row < 80 AND row > 70) THEN --1
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 85 AND column > 45 AND row < 100 AND row > 90) THEN --1
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 135 AND column > 95 AND row < 80 AND row > 70) THEN --2
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 135 AND column > 95 AND row < 100 AND row > 90) THEN --2
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 185 AND column > 145 AND row < 80 AND row > 70) THEN --3
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 185 AND column > 145 AND row < 100 AND row > 90) THEN --3
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 235 AND column > 195 AND row < 80 AND row > 70) THEN --4
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 235 AND column > 195 AND row < 100 AND row > 90) THEN --4
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 285 AND column > 245 AND row < 80 AND row > 70) THEN --5
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 285 AND column > 245 AND row < 100 AND row > 90) THEN --5
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 335 AND column > 295 AND row < 80 AND row > 70) THEN --6*
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 335 AND column > 295 AND row < 100 AND row > 90) THEN --6*
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 385 AND column > 345 AND row < 80 AND row > 70) THEN --7
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 385 AND column > 345 AND row < 100 AND row > 90) THEN --7
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 435 AND column > 395 AND row < 80 AND row > 70) THEN --8
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 435 AND column > 395 AND row < 100 AND row > 90) THEN --8
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 485 AND column > 445 AND row < 80 AND row > 70) THEN --9
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 485 AND column > 445 AND row < 100 AND row > 90) THEN --9
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 535 AND column > 495 AND row < 80 AND row > 70) THEN --10
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 535 AND column > 495 AND row < 100 AND row > 90) THEN --10
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 585 AND column > 545 AND row < 80 AND row > 70) THEN --11
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 585 AND column > 545 AND row < 100 AND row > 90) THEN --11
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 320 AND column > 310 AND row < 200 AND row > 190) THEN --Ball
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+		  ELSIF(column < 350 AND column > 280 AND row < 390 AND row > 380) THEN --Paddle
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+
+	  ELSIF(column < 640 AND column > 610 ) THEN -- Right edge
+        red <= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue <= (OTHERS => '1');
+	  ELSE 
+		red <= (OTHERS => '0');
+		green <= (OTHERS => '0');
+		blue <= (OTHERS => '0');
+	
+      END IF;
+    ELSE                           --blanking time
+      red <= (OTHERS => '0');
+      green <= (OTHERS => '0');
+      blue <= (OTHERS => '0');
+    END IF;

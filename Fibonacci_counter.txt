@@ -1,0 +1,350 @@
+
+-- fibonacci counter notes
+-- counter must go from 0 to 29, to include all 6 decimal - digit fibonacci numbers
+-- to display on 7 seg- 
+-- need 4 bits input per display 
+-- case statement for 7 seg 
+-- ex when "00000" hex 0 is 1
+library   ieee;
+use       ieee.std_logic_1164.all;
+use       IEEE.numeric_std.all;
+
+entity pe2_DeFelice is
+    port (      
+      
+		  reset			  : in std_logic;
+        key1				: in std_logic;                 
+        hex0     : out std_logic_vector(6 downto 0);  -- 7-segment display output
+		  hex1     : out std_logic_vector(6 downto 0) := "1111111";
+		  hex2     : out std_logic_vector(6 downto 0) := "1111111";
+		  hex3     : out std_logic_vector(6 downto 0) := "1111111";
+		  hex4     : out std_logic_vector(6 downto 0) := "1111111";
+		  hex5     : out std_logic_vector(6 downto 0) := "1111111";
+		  max10_clk	: in std_logic		  	
+		  
+    );
+end pe2_DeFelice;
+
+
+architecture behavior of pe2_DeFelice is
+
+
+
+signal clk_count1 : integer := 50000000;  -- 1 second clock count
+signal clk_count2 : integer := 20000000;  -- 0.4 second clock count
+--variable counter : integer := 0;
+--signal counter_in     : integer:= 0;
+
+begin
+
+	process(max10_clk)
+	
+	variable counter : integer := 0;  -- was 30 
+	
+	begin
+
+	
+	if rising_edge(max10_clk) then
+		
+		if reset = '0' then			-- while key0 is pressed and held down, count fibonacci numbers backwards
+											-- viewing each number for 0.4 seconds.
+--		
+
+--			
+		if (clk_count2 > 0 ) then 			-- if count is any number over zero, decrement 1
+
+			clk_count2 <= clk_count2 - 1 ;
+			
+			 
+	else
+			clk_count2 <= 20000000 ;		-- if count goes below 0, automatically reset count. 
+			
+			
+			counter := counter - 1;  		-- wherever counter is at, decrement it by one. counter = 0 addressed below
+			
+			end if;
+			
+				
+			if counter = 0 then 				-- when counter is 0, reset it to 30 and start over.
+			
+				counter := 30;
+				
+			end if;
+end if;
+			
+--if key1 = '0' then 		
+	if (clk_count1 > 0 ) then 					-- if count is any number over zero, decrement 1
+	
+			clk_count1 <= clk_count1 - 1 ;
+			 
+	else
+			clk_count1 <= 50000000 ;		-- once clk_count is no longer greater than 0, assign it with 50,000,000
+													-- to automatically "reset" the clk_count.
+												
+		counter := counter + 1;  
+		
+		-- while decrementing thru 0 to 50 mill is happening, counter will stay at 
+		-- current counter value. when this else statement hits 
+		-- (when clock hits 50 mill), counter will increment by one, therefore 
+		-- going to our next when statement in the case.
+		
+			if counter = 30 then  
+		
+			counter := 0;
+			
+			end if;
+		
+		--counter_in <= STD_LOGIC_VECTOR(to_unsigned(counter, 5)); -- <= convert to 5 bit- binary #
+	
+		
+	end if;
+		end if;
+
+
+case counter is 
+
+when 0 => hex0 <= "1000000" ;
+			 hex1 <= "1111111" ; -- 0 fibonacci #1
+			 hex2 <= "1111111" ;
+			 hex3 <= "1111111" ;
+			 hex4 <= "1111111" ;
+			 hex5 <= "1111111" ;
+			 
+when 1 => hex0 <= "1111001" ; -- 1 
+			 hex1 <= "1111111" ;
+			 hex2 <= "1111111" ;
+			 hex3 <= "1111111" ;
+			 hex4 <= "1111111" ;
+			 hex5 <= "1111111" ;
+			 
+			 
+when 2 => hex0 <= "1111001" ; -- 1
+			 hex1 <= "1111111" ;
+			 hex2 <= "1111111" ;
+			 hex3 <= "1111111" ;
+			 hex4 <= "1111111" ;
+			 hex5 <= "1111111" ;
+			 
+when 3 => hex0 <= "0100100" ; -- 2
+			 hex1 <= "1111111" ;
+			 hex2 <= "1111111" ;
+			 hex3 <= "1111111" ;
+			 hex4 <= "1111111" ;
+			 hex5 <= "1111111" ;
+			 
+when 4 => hex0 <= "0110000" ; -- 3
+			 hex1 <= "1111111" ;
+			 hex2 <= "1111111" ;
+			 hex3 <= "1111111" ;
+			 hex4 <= "1111111" ;
+			 hex5 <= "1111111" ;
+			 
+when 5 => hex0 <= "0010010" ; -- 5
+			 hex1 <= "1111111" ;
+			 hex2 <= "1111111" ;
+			 hex3 <= "1111111" ;
+			 hex4 <= "1111111" ;
+			 hex5 <= "1111111" ;
+			 
+when 6 => hex0 <= "0000000" ; -- 8
+			 hex1 <= "1111111" ;
+			 hex2 <= "1111111" ;
+			 hex3 <= "1111111" ;
+			 hex4 <= "1111111" ;
+			 hex5 <= "1111111" ;
+			 
+			 
+when 7 => 					hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "1111111" ;     
+								hex1 <= "1111001"; 
+								hex0 <= "0110000"; -- 13
+							 
+when 8 =>     				hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "1111111" ;
+								hex1 <= "0100100"; 
+								hex0 <= "1111001";-- 21
+							 
+when 9 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "1111111" ;
+								hex1 <= "0110000"; 
+								hex0 <= "0011001";-- 34
+									
+when 10 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "1111111" ;
+								hex1 <= "0010010"; 
+								hex0 <= "0010010";-- 55
+							 
+when 11  =>      			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "1111111" ;
+								hex1 <= "0000000"; 
+								hex0 <= "0011000";-- 89
+							 
+when 12 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "1111001";
+								hex1 <= "0011001"; 
+								hex0 <= "0011001";-- 144
+							 
+when 13 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "0100100";
+								hex1 <= "0110000"; 
+								hex0 <= "0110000";-- 233
+							 
+when 14 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "0110000";
+								hex1 <= "1111000"; 
+								hex0 <= "1111000";-- 377
+							 
+when 15 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "0000010";
+								hex1 <= "1111001"; 
+								hex0 <= "1000000";-- 610
+							 
+when 16 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111111" ;
+								hex2 <= "0011000";
+								hex1 <= "0000000"; 
+								hex0 <= "1111000";-- 987
+							 
+							 
+when 17 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "1111001";
+								hex2 <= "0010010";
+								hex1 <= "0011000"; 
+								hex0 <= "1111000";-- 1597
+							 
+when 18 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "0100100";
+								hex2 <= "0010010";
+								hex1 <= "0000000"; 
+								hex0 <= "0011001";-- 2584
+							 
+when 19 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "0011001";
+								hex2 <= "1111001";
+								hex1 <= "0000000"; 
+								hex0 <= "1111001";-- 4181
+
+when 20 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111111" ;
+								hex3 <= "0000010";
+								hex2 <= "1111000";
+								hex1 <= "0000010"; 
+								hex0 <= "0010010";-- 6765
+
+when 21 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111001";
+								hex3 <= "1000000";
+								hex2 <= "0011000";
+								hex1 <= "0011001"; 
+								hex0 <= "0000010";-- 10946
+
+when 22 =>      			hex5 <= "1111111" ;
+								hex4 <= "1111001";
+								hex3 <= "1111000";
+								hex2 <= "1111000";
+								hex1 <= "1111001"; 
+								hex0 <= "1111001";-- 17711
+
+when 23 =>       			hex5 <= "1111111" ;
+								hex4 <= "0100100";
+								hex3 <= "0000000";
+								hex2 <= "0000010";
+								hex1 <= "0010010"; 
+								hex0 <= "1111000";-- 28657
+
+when 24 =>       			hex5 <= "1111111" ;
+								hex4 <= "0011001";
+								hex3 <= "0000010";
+								hex2 <= "0110000";
+								hex1 <= "0000010"; 
+								hex0 <= "0000000";-- 46368
+
+when 25 =>       			hex5 <= "1111111" ;
+								hex4 <= "1111000";
+								hex3 <= "0010010";
+								hex2 <= "1000000";
+								hex1 <= "0100100"; 
+								hex0 <= "0010010";-- 75025
+
+when 26 =>       			hex5 <= "1111001";
+								hex4 <= "0100100";
+								hex3 <= "1111001";
+								hex2 <= "0110000";
+								hex1 <= "0011000"; 
+								hex0 <= "0110000";-- 121393
+							 
+when 27 =>       			hex5 <= "1111001";
+								hex4 <= "0011000";
+								hex3 <= "0000010";
+								hex2 <= "0011001";
+								hex1 <= "1111001"; 
+								hex0 <= "0000000";-- 196418
+							 
+when 28 =>      			 hex5 <= "0110000";
+								hex4 <= "1111001";
+								hex3 <= "1111000";
+								hex2 <= "0000000";
+								hex1 <= "1111001"; 
+								hex0 <= "1111001";-- 317811
+							 
+when 29 =>       			hex5 <= "0010010";
+								hex4 <= "1111001";
+								hex3 <= "0011001";
+								hex2 <= "0100100";
+								hex1 <= "0100100"; 
+								hex0 <= "0011000";-- 514229
+							 
+when 30 =>       			hex5 <= "0000000";
+								hex4 <= "0110000";
+								hex3 <= "0100100";
+								hex2 <= "1000000";
+								hex1 <= "0011001"; 
+								hex0 <= "1000000";-- 832040
+
+when others => hex0 <= "0000000"; 
+
+end case;
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+-- commented from here down for testing
+
+
+
+--
+--
+---- ROTARY ENCODER BELOW
+
+--end if;
+end process;
+
+
+
+
+end behavior;
