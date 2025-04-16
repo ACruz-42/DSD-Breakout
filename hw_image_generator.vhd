@@ -76,8 +76,8 @@ CONSTANT BALL_Y 		: INTEGER := 190;
    
    -- Position tracking
    SIGNAL current_pos : INTEGER RANGE 20 TO 610 := 280;  -- Initial centered position CHANGE THIS
-SIGNAL currentballx_pos : INTEGER RANGE 20 TO 610 := 280;
-SIGNAL currentbally_pos : INTEGER RANGE 20 TO 610 := 280;
+SIGNAL currentballx_pos : INTEGER RANGE 20 TO 610 := 310;
+SIGNAL currentbally_pos : INTEGER RANGE 20 TO 480 := 190;
    
    -- The clock was too fast as is, so we slow it down
    CONSTANT CLK_DIV : INTEGER := 10000;
@@ -443,6 +443,12 @@ VARIABLE ballxy  : INTEGER := 0;
 --Ball Movement Test Area
 IF rising_edge(pixel_clk_m) THEN
 	IF ballxy = 0 THEN
+		currentballx_position <= currentballx_position + 5;
+	currentbally_position <= currentbally_position - 5;
+		END IF
+	ball_x <= currentballx_position;
+	ball_y <= currentbally_position;
+END IF
 		
 
 
