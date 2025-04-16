@@ -57,13 +57,17 @@ END hw_image_generator;
 ARCHITECTURE behavior OF hw_image_generator IS
 
 signal paddle_x 			: integer := 280;
+signal ball_x  : INTEGER := 310;
 signal channel_a_async 	: std_logic;
 signal channel_a_sync 	: std_logic;
 signal channel_b_async 	: std_logic;
 signal channel_b_sync	: std_logic;
 CONSTANT PADDLE_WIDTH 	: INTEGER := 70;
+CONSTANT BALL_WIDTH 	: INTEGER := 10;
+CONSTANT BALL_HEIGHT 	: INTEGER := 10;
 CONSTANT PADDLE_HEIGHT 	: INTEGER := 10;
 CONSTANT PADDLE_Y 		: INTEGER := 380;
+CONSTANT BALL_Y 		: INTEGER := 190;
 
 
 ------------------------------------------------------------------------------------------------
@@ -421,6 +425,7 @@ row < paddle_y + paddle_height) THEN --Paddle
 	
   main_process: PROCESS(pixel_clk_m)
      VARIABLE hundreds, tens, ones : INTEGER;
+VARIABLE ballxy  : INTEGER := 0;
      VARIABLE current_AB : STD_LOGIC_VECTOR(1 DOWNTO 0);
    BEGIN
      IF rising_edge(pixel_clk_m) THEN
@@ -432,6 +437,14 @@ row < paddle_y + paddle_height) THEN --Paddle
        
        -- Clock divider for debouncing. I'm not sure if it works, but I saw
  		-- A bunch of similar project onlines used debouncers, so I made one myself
+--Ball Movement Test Area
+IF rising_edge(pixel_clk_m) THEN
+	IF ballxy = 0 THEN
+		
+
+
+
+
        IF clk_count = CLK_DIV-1 THEN
          clk_count <= 0;
          slow_clk_enable <= '1';
