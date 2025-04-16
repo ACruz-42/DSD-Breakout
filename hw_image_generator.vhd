@@ -384,7 +384,8 @@ IF(disp_ena = '1' ) THEN
 
 	 
 	 -----------------------------------------------------------------------------------------------
-		  ELSIF(column < 320 AND column > 310 AND row < 200 AND row > 190) THEN --Ball
+		  ELSIF(column > ball_x AND column < ball_x + ball_width AND row >= ball_y AND 
+row < ball_y + ball_height) THEN --Ball
         red 	<= (OTHERS => '1');
         green  <= (OTHERS => '1');
         blue 	<= (OTHERS => '1');
