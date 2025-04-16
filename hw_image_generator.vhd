@@ -443,11 +443,11 @@ VARIABLE ballxy  : INTEGER := 0;
 --Ball Movement Test Area
 IF rising_edge(pixel_clk_m) THEN
 	IF ballxy = 0 THEN
-		currentballx_position <= currentballx_position + 5;
-	currentbally_position <= currentbally_position - 5;
+		currentballx_pos <= currentballx_position + 5;
+	currentbally_pos <= currentbally_position - 5;
 		END IF
-	ball_x <= currentballx_position;
-	ball_y <= currentbally_position;
+	ball_x <= currentballx_pos;
+	ball_y <= currentbally_pos;
 END IF
 		
 
