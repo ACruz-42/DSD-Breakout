@@ -111,6 +111,7 @@ IF(disp_ena = '1' ) THEN
         blue	<= (OTHERS => '1');
 		  
 		  ----------------------- BEGIN BLOCKS ------------------------------------------------------
+	----------------------- Middle Two Rows ------------------------------------------------------
 		  
 	  ELSIF(column < 85 AND column > 45 AND row < 80 AND row > 70 AND fib_index /= 0) THEN --1 ON
 		
@@ -379,6 +380,550 @@ IF(disp_ena = '1' ) THEN
 		  
 		  
 		  ELSIF(column < 585 AND column > 545 AND row < 100 AND row > 90 AND fib_index = 21) THEN --11
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+		  ----------------------- Bottom Two Rows ------------------------------------------------------
+		  
+		  ELSIF(column < 85 AND column > 45 AND row < 120 AND row > 110 AND fib_index /= 0) THEN --12 ON
+		
+        red   <= (OTHERS => '1');		-- WHITE
+        green <= (OTHERS => '1');
+        blue  <= (OTHERS => '1');
+		  
+		  ELSIF(column < 85 AND column > 45 AND row < 120 AND row > 110 AND fib_index = 0) THEN --12 OFF
+		
+        red   <= (OTHERS => '0');		-- BLACK
+        green <= (OTHERS => '0');
+        blue  <= (OTHERS => '0');
+    
+			
+		  
+		ELSIF(column < 85 AND column > 45 AND row < 140 AND row > 130 AND fib_index /= 1) THEN --12 ON
+		  
+        red   <= (OTHERS => '1');
+        green <= (OTHERS => '1');
+        blue  <= (OTHERS => '1');
+		  
+		  ELSIF(column < 85 AND column > 45 AND row < 140 AND row > 130 AND fib_index = 1) THEN --12 OFF
+		  
+        red   <= (OTHERS => '0');
+        green <= (OTHERS => '0');
+        blue  <= (OTHERS => '0');
+		  
+		  ELSIF(column < 135 AND column > 95 AND row < 120 AND row > 110 AND fib_index /= 2) THEN --13 ON
+
+        red   <= (OTHERS => '1');
+        green <= (OTHERS => '1');
+        blue  <= (OTHERS => '1');
+		  
+		  ELSIF(column < 135 AND column > 95 AND row < 120 AND row > 110 AND fib_index = 2) THEN --13 OFF
+		  
+        red   <= (OTHERS => '0');
+        green <= (OTHERS => '0');
+        blue  <= (OTHERS => '0');
+    
+	 
+	 
+		ELSIF(column < 135 AND column > 95 AND row < 140 AND row > 130 AND fib_index /= 3) THEN --13 ON 
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 135 AND column > 95 AND row < 140 AND row > 130 AND fib_index = 3) THEN --13 OFF 
+		  red   <= (OTHERS => '0');
+        green <= (OTHERS => '0');
+        blue  <= (OTHERS => '0');
+	 
+	 
+	ELSIF(column < 185 AND column > 145 AND row < 120 AND row > 110 AND fib_index /= 4) THEN --14 ON
+       red <= (OTHERS => '1');
+       green  <= (OTHERS => '1');
+		 blue <= (OTHERS => '1');
+		 
+		 ELSIF(column < 185 AND column > 145 AND row < 120 AND row > 110 AND fib_index = 4) THEN --14 OFF
+       red 		<= (OTHERS => '0');
+       green  	<= (OTHERS => '0');
+		 blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 185 AND column > 145 AND row < 140 AND row > 130 AND fib_index /= 5) THEN --14 ON
+        red		<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 185 AND column > 145 AND row < 140 AND row > 130 AND fib_index = 5) THEN --14 OFF
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	 
+	ELSIF(column < 235 AND column > 195 AND row < 120 AND row > 110 AND fib_index /= 6) THEN --15 ON
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 235 AND column > 195 AND row < 120 AND row > 110 AND fib_index = 6) THEN --15 ON
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+
+	 
+	ELSIF(column < 235 AND column > 195 AND row < 140 AND row > 130 AND fib_index /= 7) THEN --15
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 235 AND column > 195 AND row < 140 AND row > 130 AND fib_index = 7) THEN --15
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 285 AND column > 245 AND row < 120 AND row > 110 AND fib_index /= 8) THEN --16
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 285 AND column > 245 AND row < 120 AND row > 110 AND fib_index = 8) THEN --16
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 285 AND column > 245 AND row < 140 AND row > 130 AND fib_index /= 9) THEN --16
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 285 AND column > 245 AND row < 140 AND row > 130 AND fib_index = 9) THEN --16
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+		  
+		  
+	ELSIF(column < 335 AND column > 295 AND row < 120 AND row > 110 AND fib_index /= 10) THEN --17*
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 335 AND column > 295 AND row < 120 AND row > 110 AND fib_index = 10) THEN --17*
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+		  
+
+	 
+	ELSIF(column < 335 AND column > 295 AND row < 140 AND row > 130 AND fib_index /= 11) THEN --17*
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 335 AND column > 295 AND row < 140 AND row > 130 AND fib_index = 11) THEN --17*
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 385 AND column > 345 AND row < 120 AND row > 110 AND fib_index /= 12) THEN --18
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 385 AND column > 345 AND row < 120 AND row > 110 AND fib_index = 12) THEN --18
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 385 AND column > 345 AND row < 140 AND row > 130 AND fib_index /= 13) THEN --18
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 385 AND column > 345 AND row < 140 AND row > 130 AND fib_index = 13) THEN --18
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 435 AND column > 395 AND row < 120 AND row > 110 AND fib_index /= 14) THEN --19
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 435 AND column > 395 AND row < 120 AND row > 110 AND fib_index = 14) THEN --19
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 435 AND column > 395 AND row < 140 AND row > 130 AND fib_index /= 15) THEN --19
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 435 AND column > 395 AND row < 140 AND row > 130 AND fib_index = 15) THEN --19
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 485 AND column > 445 AND row < 120 AND row > 110 AND fib_index /= 16) THEN --20
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 485 AND column > 445 AND row < 120 AND row > 110 AND fib_index = 16) THEN --20
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+  ELSIF(column < 485 AND column > 445 AND row < 140 AND row > 130 AND fib_index /= 17) THEN --20
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 485 AND column > 445 AND row < 140 AND row > 130 AND fib_index = 17) THEN --20
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	 
+	ELSIF(column < 535 AND column > 495 AND row < 120 AND row > 110 AND fib_index /= 18) THEN --21
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 535 AND column > 495 AND row < 120 AND row > 110 AND fib_index = 18) THEN --21
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+
+	 
+	 
+	ELSIF(column < 535 AND column > 495 AND row < 140 AND row > 130 AND fib_index /= 19) THEN --21
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 535 AND column > 495 AND row < 140 AND row > 130 AND fib_index = 19) THEN --21
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 585 AND column > 545 AND row < 120 AND row > 110 AND fib_index /= 20) THEN --22
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 585 AND column > 545 AND row < 120 AND row > 110 AND fib_index = 20) THEN --22
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	 
+	ELSIF(column < 585 AND column > 545 AND row < 140 AND row > 130 AND fib_index /= 21) THEN --22
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  
+		  ELSIF(column < 585 AND column > 545 AND row < 140 AND row > 130 AND fib_index = 21) THEN --22
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+		  ----------------------- Top Two Two Rows ------------------------------------------------------
+		  
+		  ELSIF(column < 85 AND column > 45 AND row < 40 AND row > 30 AND fib_index /= 0) THEN --23 ON
+		
+        red   <= (OTHERS => '1');		-- WHITE
+        green <= (OTHERS => '1');
+        blue  <= (OTHERS => '1');
+		  
+		  ELSIF(column < 85 AND column > 45 AND row < 40 AND row > 30 AND fib_index = 0) THEN --23 OFF
+		
+        red   <= (OTHERS => '0');		-- BLACK
+        green <= (OTHERS => '0');
+        blue  <= (OTHERS => '0');
+    
+			
+		  
+		ELSIF(column < 85 AND column > 45 AND row < 60 AND row > 50 AND fib_index /= 1) THEN --23 ON
+		  
+        red   <= (OTHERS => '1');
+        green <= (OTHERS => '1');
+        blue  <= (OTHERS => '1');
+		  
+		  ELSIF(column < 85 AND column > 45 AND row < 60 AND row > 50 AND fib_index = 1) THEN --23 OFF
+		  
+        red   <= (OTHERS => '0');
+        green <= (OTHERS => '0');
+        blue  <= (OTHERS => '0');
+  
+ 
+ 
+	 ELSIF(column < 135 AND column > 95 AND row < 40 AND row > 30 AND fib_index /= 2) THEN --2 ON
+
+        red   <= (OTHERS => '1');
+        green <= (OTHERS => '1');
+        blue  <= (OTHERS => '1');
+		  
+		  ELSIF(column < 135 AND column > 95 AND row < 40 AND row > 30 AND fib_index = 2) THEN --2 OFF
+		  
+        red   <= (OTHERS => '0');
+        green <= (OTHERS => '0');
+        blue  <= (OTHERS => '0');
+    
+	 
+	 
+		ELSIF(column < 135 AND column > 95 AND row < 60 AND row > 50 AND fib_index /= 3) THEN --2 ON 
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 135 AND column > 95 AND row < 60 AND row > 50 AND fib_index = 3) THEN --2 OFF 
+		  red   <= (OTHERS => '0');
+        green <= (OTHERS => '0');
+        blue  <= (OTHERS => '0');
+	 
+	 
+	ELSIF(column < 185 AND column > 145 AND row < 40 AND row > 30 AND fib_index /= 4) THEN --3 ON
+       red <= (OTHERS => '1');
+       green  <= (OTHERS => '1');
+		 blue <= (OTHERS => '1');
+		 
+		 ELSIF(column < 185 AND column > 145 AND row < 40 AND row > 30 AND fib_index = 4) THEN --3 OFF
+       red 		<= (OTHERS => '0');
+       green  	<= (OTHERS => '0');
+		 blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 185 AND column > 145 AND row < 60 AND row > 50 AND fib_index /= 5) THEN --3 ON
+        red		<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 185 AND column > 145 AND row < 60 AND row > 50 AND fib_index = 5) THEN --3 OFF
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	 
+	ELSIF(column < 235 AND column > 195 AND row < 40 AND row > 30 AND fib_index /= 6) THEN --4 ON
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 235 AND column > 195 AND row < 40 AND row > 30 AND fib_index = 6) THEN --4 ON
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+
+	 
+	ELSIF(column < 235 AND column > 195 AND row < 60 AND row > 50 AND fib_index /= 7) THEN --4
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 235 AND column > 195 AND row < 60 AND row > 50 AND fib_index = 7) THEN --4
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 285 AND column > 245 AND row < 40 AND row > 30 AND fib_index /= 8) THEN --5
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 285 AND column > 245 AND row < 40 AND row > 30 AND fib_index = 8) THEN --5
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 285 AND column > 245 AND row < 60 AND row > 50 AND fib_index /= 9) THEN --5
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 285 AND column > 245 AND row < 60 AND row > 50 AND fib_index = 9) THEN --5
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+		  
+		  
+	ELSIF(column < 335 AND column > 295 AND row < 40 AND row > 30 AND fib_index /= 10) THEN --6*
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 335 AND column > 295 AND row < 40 AND row > 30 AND fib_index = 10) THEN --6*
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+		  
+
+	 
+	ELSIF(column < 335 AND column > 295 AND row < 60 AND row > 50 AND fib_index /= 11) THEN --6*
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 335 AND column > 295 AND row < 60 AND row > 50 AND fib_index = 11) THEN --6*
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 385 AND column > 345 AND row < 40 AND row > 30 AND fib_index /= 12) THEN --7
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 385 AND column > 345 AND row < 40 AND row > 30 AND fib_index = 12) THEN --7
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 385 AND column > 345 AND row < 60 AND row > 50 AND fib_index /= 13) THEN --7
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 385 AND column > 345 AND row < 60 AND row > 50 AND fib_index = 13) THEN --7
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 435 AND column > 395 AND row < 40 AND row > 30 AND fib_index /= 14) THEN --8
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 435 AND column > 395 AND row < 40 AND row > 30 AND fib_index = 14) THEN --8
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 435 AND column > 395 AND row < 60 AND row > 50 AND fib_index /= 15) THEN --8
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 435 AND column > 395 AND row < 60 AND row > 50 AND fib_index = 15) THEN --8
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 485 AND column > 445 AND row < 40 AND row > 30 AND fib_index /= 16) THEN --9
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 485 AND column > 445 AND row < 40 AND row > 30 AND fib_index = 16) THEN --9
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+  ELSIF(column < 485 AND column > 445 AND row < 60 AND row > 50 AND fib_index /= 17) THEN --9
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 485 AND column > 445 AND row < 60 AND row > 50 AND fib_index = 17) THEN --9
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	 
+	ELSIF(column < 535 AND column > 495 AND row < 40 AND row > 30 AND fib_index /= 18) THEN --10
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 535 AND column > 495 AND row < 40 AND row > 30 AND fib_index = 18) THEN --10
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+
+	 
+	 
+	ELSIF(column < 535 AND column > 495 AND row < 60 AND row > 50 AND fib_index /= 19) THEN --10
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 535 AND column > 495 AND row < 60 AND row > 50 AND fib_index = 19) THEN --10
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	ELSIF(column < 585 AND column > 545 AND row < 40 AND row > 30 AND fib_index /= 20) THEN --11
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  ELSIF(column < 585 AND column > 545 AND row < 40 AND row > 30 AND fib_index = 20) THEN --11
+        red 	<= (OTHERS => '0');
+        green  <= (OTHERS => '0');
+        blue 	<= (OTHERS => '0');
+		  
+
+	 
+	 
+	ELSIF(column < 585 AND column > 545 AND row < 60 AND row > 50 AND fib_index /= 21) THEN --11
+        red 	<= (OTHERS => '1');
+        green  <= (OTHERS => '1');
+        blue 	<= (OTHERS => '1');
+		  
+		  
+		  ELSIF(column < 585 AND column > 545 AND row < 60 AND row > 50 AND fib_index = 21) THEN --11
         red 	<= (OTHERS => '0');
         green  <= (OTHERS => '0');
         blue 	<= (OTHERS => '0');
