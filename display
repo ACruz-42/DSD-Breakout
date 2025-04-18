@@ -1,0 +1,21 @@
+
+for i in 0 to 10 loop
+      for j in 0 to 5 loop
+        if display_bloc(i, j) = '1' then
+          if (column > left(i)) and (column < right(i)) and
+             (row < top(j)) and (row > bottom(j)) then
+            red 	<= (OTHERS => '1');
+            green  <= (OTHERS => '1');
+            blue 	<= (OTHERS => '1');
+		  
+          end if;
+        else
+           if (column > left(i)) and (column < right(i)) and
+             (row < top(j)) and (row > bottom(j)) then
+            red 	<= (OTHERS => '0');
+            green  <= (OTHERS => '0');
+            blue 	<= (OTHERS => '0');
+         end if;
+        end if;
+      end loop;
+    end loop;
