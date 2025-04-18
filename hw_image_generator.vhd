@@ -78,6 +78,9 @@ CONSTANT BALL_Y 		: INTEGER := 190;
    SIGNAL current_pos : INTEGER RANGE 20 TO 610 := 280;  -- Initial centered position CHANGE THIS
 SIGNAL currentballx_pos : INTEGER RANGE 20 TO 610 := 310;
 SIGNAL currentbally_pos : INTEGER RANGE 20 TO 480 := 190;
+SIGNAL ball_right	: STD_LOGIC := '1'; -- 1 is right, 0 is left
+SIGNAL ball_up		: STD_LOGIC := '0'; -- 1 is up, 0 is down
+--SIGNAL reset_ball 		: std_logic := '0';
    
    -- The clock was too fast as is, so we slow it down
    CONSTANT CLK_DIV : INTEGER := 10000;
@@ -985,19 +988,6 @@ VARIABLE ballxy  : INTEGER := 0;
        
        -- Clock divider for debouncing. I'm not sure if it works, but I saw
  		-- A bunch of similar project onlines used debouncers, so I made one myself
---Ball Movement Test Area
-IF rising_edge(pixel_clk_m) THEN
-	IF ballxy = 0 THEN
-		currentballx_pos <= currentballx_position + 5;
-	currentbally_pos <= currentbally_position + 5;
-		END IF
-	ball_x <= currentballx_pos;
-	ball_y <= currentbally_pos;
-END IF
-		
-
-
-
 
        IF clk_count = CLK_DIV-1 THEN
          clk_count <= 0;
@@ -1011,6 +1001,78 @@ END IF
        IF slow_clk_enable = '1' THEN
          -- Make encoder state
          current_AB := A_sync_1 & B_sync_1;
+
+
+--Ball Movement Test Area
+IF rising_edge(pixel_clk_m) THEN
+	
+	IF (ball_x >= paddle_x AND ball_x < paddle_x + paddle_width AND ball_y + ball_height >= paddle_y ) THEN
+        	ball_up <= '1';  -- ball goes up after hitting paddle
+		  
+  	ELSIF (ball_y <= 10 + ball_height) THEN
+       		ball_up <= '0';  -- ball goes down after hitting top edge
+		  
+	ELSIF (ball_y < 480) THEN -- if ball goes off bottom of screen/misses paddle
+    		currentballx_pos <= 320;  -- ball back into center of screen  -- ****THIS IS NOT WORKING YET******
+    		currentbally_pos <= 240;  
+    		ball_right <= '1';        -- initial direction is right
+   		 ball_up <= '0';           -- start in a downward direction
+		--reset_ball <= '1';
+  	END IF;
+	
+	
+		IF (ball_x >= 610 - ball_width) THEN  -- addressing ball hitting right edge condition
+			ball_right <= '0'; -- turn left	  -- if right edge hit, change direction
+		ELSIF (ball_x < 11 + ball_width) THEN -- if left edge hit, change direction 
+			ball_right <= '1'; -- turn right
+		END IF;
+		
+		
+		
+	-- horizontal movement left/right
+	IF ball_right = '1' THEN
+		 currentballx_pos <= currentballx_pos + 5; -- move right
+	ELSE
+		 currentballx_pos <= currentballx_pos - 5; -- move left
+	END IF;
+
+	-- vertical movement up/down
+	IF ball_up = '0' THEN
+		 currentbally_pos <= currentbally_pos + 5; -- move down
+	ELSE
+		 currentbally_pos <= currentbally_pos - 5; -- move up
+	END IF;
+	 
+	 
+		-- update ball position based on direction
+		 IF ball_up = '0' THEN  -- going down
+			  currentbally_pos <= currentbally_pos + 5; -- increment to travel down screen
+		 ELSE  						-- going up
+			  currentbally_pos <= currentbally_pos - 5; -- decrement to travel up screen
+		 END IF;
+
+	
+	 
+---------------------------------------------------------- 
+--	 ** TRIED ADDING RESET_BALL SIGNAL, AND IT JUST MADE THE BALL FREEZE , WILL MOST LIKELY GET RID OF THIS?
+-- THIS WAS AN ATTEMPT TO GET BALL TO COME OUT FROM MIDDLE OF SCREEN AFTER IT MISSES THE PADDLE/ EXITS SCREEN BOTTOM
+--	 IF reset_ball = '1' THEN 
+--    currentballx_pos <= 320;  -- Center horizontally
+--    currentbally_pos <= 240;  -- Center vertically (or a bit higher)
+--    ball_right <= '1';        -- initial direction is right
+--    ball_up <= '0';           -- start in a downward direction
+--	 END IF;
+-----------------------------------------------
+
+    -- update output signals
+    ball_x <= currentballx_pos;
+    ball_y <= currentbally_pos;
+		
+END IF;	
+
+
+
+	
          
          -- We detect rotation based on mini-state machine
          CASE prev_AB & current_AB IS
