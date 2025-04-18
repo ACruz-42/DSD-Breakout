@@ -1,9 +1,19 @@
 -- Column X positions for 11 columns (e.g., col 0 to col 10)
-constant col_x : array(0 to 10) of integer := (
+constant left : array(0 to 10) of integer := (
     45,  95, 145, 195, 245, 295, 345, 395, 445, 495, 545
 );
 
 -- Row Y positions for 6 rows (e.g., row 0 to row 5)
-constant row_y : array(0 to 5) of integer := (
+constant top : array(0 to 5) of integer := (
     70,  90, 110, 130, 150, 170
+);
+
+-- Column X positions for 11 columns (e.g., col 0 to col 10)
+constant right : array(0 to 10) of integer := (
+    85,  135, 185, 235, 285, 335, 385, 435, 485, 535, 585
+);
+
+-- Row Y positions for 6 rows (e.g., row 0 to row 5)
+constant bottom : array(0 to 5) of integer := (
+    80,  100, 120, 140, 160, 180
 );
