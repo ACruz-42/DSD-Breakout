@@ -64,10 +64,25 @@ signal channel_b_async 	: std_logic;
 signal channel_b_sync	: std_logic;
 Type blocs IS array (0 to 10, 0 to 5) of std_logic;
 signal display_bloc : blocs := (OTHERS => (OTHERS => '1')));
-signal block_left : STD_LOGIC_VECTOR(10 DOWNTO 0);
-signal block_right : STD_LOGIC_VECTOR(10 DOWNTO 0);
-signal block_bottom : STD_LOGIC_VECTOR(5 DOWNTO 0);
-signal block_top : STD_LOGIC_VECTOR(5 DOWNTO 0);
+-- Column X positions for 11 columns (e.g., col 0 to col 10)
+constant left : array(0 to 10) of integer := (
+    45,  95, 145, 195, 245, 295, 345, 395, 445, 495, 545
+);
+
+-- Row Y positions for 6 rows (e.g., row 0 to row 5)
+constant top : array(0 to 5) of integer := (
+    70,  90, 110, 130, 150, 170
+);
+
+-- Column X positions for 11 columns (e.g., col 0 to col 10)
+constant right : array(0 to 10) of integer := (
+    85,  135, 185, 235, 285, 335, 385, 435, 485, 535, 585
+);
+
+-- Row Y positions for 6 rows (e.g., row 0 to row 5)
+constant bottom : array(0 to 5) of integer := (
+    80,  100, 120, 140, 160, 180
+);
 CONSTANT PADDLE_WIDTH 	: INTEGER := 70;
 CONSTANT BALL_WIDTH 	: INTEGER := 10;
 CONSTANT BALL_HEIGHT 	: INTEGER := 10;
@@ -942,26 +957,26 @@ for i in 0 to 10 loop
       for j in 0 to 5 loop
         if display_bloc(i, j) = '1' then
           -- Top collision
-          if (ball_x > block_left(i)) and (ball_x < block_right(i)) and
-             (ball_y < block_bottom(j) + 1) and (ball_y > block_bottom(j) - 1) then
+          if (ball_x > left(i)) and (ball_x < right(i)) and
+             (ball_y < bottom(j) + 1) and (ball_y > bottom(j) - 1) then
             display_bloc(i, j) <= '0';
             ball_up <= '0';
 
           -- Bottom collision
-          elsif (ball_x > block_left(i)) and (ball_x < block_right(i)) and
-                (ball_y + ball_height < block_top(j) - 1) and (ball_y + ball_height > block_top(j) + 1) then
+          elsif (ball_x > left(i)) and (ball_x < right(i)) and
+                (ball_y + ball_height < top(j) - 1) and (ball_y + ball_height > top(j) + 1) then
             display_bloc(i, j) <= '0';
             ball_up <= '1';
 
           -- Left collision
-          elsif (ball_x + ball_width > block_left(i) - 1) and (ball_x + ball_width < block_left(i) + 1) and
-                (row < block_bottom(j)) and (row > block_top(j)) then
+          elsif (ball_x + ball_width > left(i) - 1) and (ball_x + ball_width < left(i) + 1) and
+                (row < bottom(j)) and (row > top(j)) then
             display_bloc(i, j) <= '0';
             ball_right <= '0';
 
           -- Right collision
-          elsif (ball_x < block_right(i) + 1) and (ball_x > block_right(i) - 1) and
-                (row < block_bottom(j)) and (row > block_top(j)) then
+          elsif (ball_x < right(i) + 1) and (ball_x > right(i) - 1) and
+                (row < bottom(j)) and (row > top(j)) then
             display_bloc(i, j) <= '0';
             ball_right <= '1';
           end if;
