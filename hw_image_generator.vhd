@@ -62,6 +62,12 @@ signal channel_a_async 	: std_logic;
 signal channel_a_sync 	: std_logic;
 signal channel_b_async 	: std_logic;
 signal channel_b_sync	: std_logic;
+Type blocs IS array (0 to 10, 0 to 5) of std_logic;
+signal display_bloc : blocs := (OTHERS => (OTHERS => '1')));
+signal block_left : STD_LOGIC_VECTOR(10 DOWNTO 0);
+signal block_right : STD_LOGIC_VECTOR(10 DOWNTO 0);
+signal block_bottom : STD_LOGIC_VECTOR(5 DOWNTO 0);
+signal block_top : STD_LOGIC_VECTOR(5 DOWNTO 0);
 CONSTANT PADDLE_WIDTH 	: INTEGER := 70;
 CONSTANT BALL_WIDTH 	: INTEGER := 10;
 CONSTANT BALL_HEIGHT 	: INTEGER := 10;
@@ -116,13 +122,13 @@ IF(disp_ena = '1' ) THEN
 		  ----------------------- BEGIN BLOCKS ------------------------------------------------------
 	----------------------- Middle Two Rows ------------------------------------------------------
 		  
-	  ELSIF(column < 85 AND column > 45 AND row < 80 AND row > 70 AND fib_index /= 0) THEN --1 ON
+	  ELSIF(column < 85 AND column > 45 AND row < 80 AND row > 70 AND display_bloc[0,2] = 1) THEN --1 ON
 		
         red   <= (OTHERS => '1');		-- WHITE
         green <= (OTHERS => '1');
         blue  <= (OTHERS => '1');
 		  
-		  ELSIF(column < 85 AND column > 45 AND row < 80 AND row > 70 AND fib_index = 0) THEN --1 OFF
+		  ELSIF(column < 85 AND column > 45 AND row < 80 AND row > 70 AND display_bloc[0,2] /= 1) THEN --1 OFF
 		
         red   <= (OTHERS => '0');		-- BLACK
         green <= (OTHERS => '0');
@@ -130,13 +136,13 @@ IF(disp_ena = '1' ) THEN
     
 			
 		  
-		ELSIF(column < 85 AND column > 45 AND row < 100 AND row > 90 AND fib_index /= 1) THEN --1 ON
+		ELSIF(column < 85 AND column > 45 AND row < 100 AND row > 90 AND display_bloc[0,3] = 1) THEN --1 ON
 		  
         red   <= (OTHERS => '1');
         green <= (OTHERS => '1');
         blue  <= (OTHERS => '1');
 		  
-		  ELSIF(column < 85 AND column > 45 AND row < 100 AND row > 90 AND fib_index = 1) THEN --1 OFF
+		  ELSIF(column < 85 AND column > 45 AND row < 100 AND row > 90 AND display_bloc[0,3] /= 1) THEN --1 OFF
 		  
         red   <= (OTHERS => '0');
         green <= (OTHERS => '0');
@@ -389,13 +395,13 @@ IF(disp_ena = '1' ) THEN
 		  
 		  ----------------------- Bottom Two Rows ------------------------------------------------------
 		  
-		  ELSIF(column < 85 AND column > 45 AND row < 120 AND row > 110 AND fib_index /= 0) THEN --12 ON
+		  ELSIF(column < 85 AND column > 45 AND row < 120 AND row > 110 AND display_bloc[0,4] = 1) THEN --12 ON
 		
         red   <= (OTHERS => '1');		-- WHITE
         green <= (OTHERS => '1');
         blue  <= (OTHERS => '1');
 		  
-		  ELSIF(column < 85 AND column > 45 AND row < 120 AND row > 110 AND fib_index = 0) THEN --12 OFF
+		  ELSIF(column < 85 AND column > 45 AND row < 120 AND row > 110 AND display_bloc[0,4] /= 1) THEN --12 OFF
 		
         red   <= (OTHERS => '0');		-- BLACK
         green <= (OTHERS => '0');
@@ -403,13 +409,13 @@ IF(disp_ena = '1' ) THEN
     
 			
 		  
-		ELSIF(column < 85 AND column > 45 AND row < 140 AND row > 130 AND fib_index /= 1) THEN --12 ON
+		ELSIF(column < 85 AND column > 45 AND row < 140 AND row > 130 AND display_bloc[0,5] = 1) THEN --12 ON
 		  
         red   <= (OTHERS => '1');
         green <= (OTHERS => '1');
         blue  <= (OTHERS => '1');
 		  
-		  ELSIF(column < 85 AND column > 45 AND row < 140 AND row > 130 AND fib_index = 1) THEN --12 OFF
+		  ELSIF(column < 85 AND column > 45 AND row < 140 AND row > 130 AND display_bloc[0,5] /= 1) THEN --12 OFF
 		  
         red   <= (OTHERS => '0');
         green <= (OTHERS => '0');
@@ -660,13 +666,13 @@ IF(disp_ena = '1' ) THEN
 		  
 		  ----------------------- Top Two Two Rows ------------------------------------------------------
 		  
-		  ELSIF(column < 85 AND column > 45 AND row < 40 AND row > 30 AND fib_index /= 0) THEN --23 ON
+		  ELSIF(column < 85 AND column > 45 AND row < 40 AND row > 30 AND display_bloc[0,0] = 1) THEN --23 ON
 		
         red   <= (OTHERS => '1');		-- WHITE
         green <= (OTHERS => '1');
         blue  <= (OTHERS => '1');
 		  
-		  ELSIF(column < 85 AND column > 45 AND row < 40 AND row > 30 AND fib_index = 0) THEN --23 OFF
+		  ELSIF(column < 85 AND column > 45 AND row < 40 AND row > 30 AND display_bloc[0,0] /= 1) THEN --23 OFF
 		
         red   <= (OTHERS => '0');		-- BLACK
         green <= (OTHERS => '0');
@@ -674,13 +680,13 @@ IF(disp_ena = '1' ) THEN
     
 			
 		  
-		ELSIF(column < 85 AND column > 45 AND row < 60 AND row > 50 AND fib_index /= 1) THEN --23 ON
+		ELSIF(column < 85 AND column > 45 AND row < 60 AND row > 50 AND display_bloc[0,1] = 1) THEN --23 ON
 		  
         red   <= (OTHERS => '1');
         green <= (OTHERS => '1');
         blue  <= (OTHERS => '1');
 		  
-		  ELSIF(column < 85 AND column > 45 AND row < 60 AND row > 50 AND fib_index = 1) THEN --23 OFF
+		  ELSIF(column < 85 AND column > 45 AND row < 60 AND row > 50 AND display_bloc[0,1] = 1) THEN --23 OFF
 		  
         red   <= (OTHERS => '0');
         green <= (OTHERS => '0');
@@ -930,7 +936,79 @@ IF(disp_ena = '1' ) THEN
         red 	<= (OTHERS => '0');
         green  <= (OTHERS => '0');
         blue 	<= (OTHERS => '0');
-		  
+
+--bloc collision test area------
+for i in 0 to 10 loop
+      for j in 0 to 5 loop
+        if display_bloc(i, j) = '1' then
+          -- Top collision
+          if (ball_x > block_left(i)) and (ball_x < block_right(i)) and
+             (ball_y < block_bottom(j) + 1) and (ball_y > block_bottom(j) - 1) then
+            display_bloc(i, j) <= '0';
+            ball_up <= '0';
+
+          -- Bottom collision
+          elsif (ball_x > block_left(i)) and (ball_x < block_right(i)) and
+                (ball_y + ball_height < block_top(j) - 1) and (ball_y + ball_height > block_top(j) + 1) then
+            display_bloc(i, j) <= '0';
+            ball_up <= '1';
+
+          -- Left collision
+          elsif (ball_x + ball_width > block_left(i) - 1) and (ball_x + ball_width < block_left(i) + 1) and
+                (row < block_bottom(j)) and (row > block_top(j)) then
+            display_bloc(i, j) <= '0';
+            ball_right <= '0';
+
+          -- Right collision
+          elsif (ball_x < block_right(i) + 1) and (ball_x > block_right(i) - 1) and
+                (row < block_bottom(j)) and (row > block_top(j)) then
+            display_bloc(i, j) <= '0';
+            ball_right <= '1';
+          end if;
+        end if;
+      end loop;
+    end loop;
+
+--IF(block1 = 1) then --column < 85 AND column > 45 AND row < 80 AND row > 70 AND fib_index /= 0
+	--If(ball_x > 45 and ball_x < 85 and ball_y < 81 and ball_y > 79) then
+	--	block1 <= 0;
+	--	ball_up <= '0';
+	--elsif(ball_x > 45 and ball_x < 85 and ball_y + ball_height < 69 and ball_y + ball_height > 71) then
+	--	block1 <= 0;
+	--	ball_up <= '1';
+	--elsif(ball_x + ball_width > 44 and ball_x + ball_width < 46 AND row < 80 AND row > 70) then
+	--	block1 <= 0;
+	--	ball_right <= '0';
+	--elsif(ball_x < 86 and ball_x > 84 AND row < 80 AND row > 70) then
+	---	block1 <= 0;
+	--	ball_right <= '1';
+	--end if;
+--end if;
+--	block_left[0] <= 45;
+--	block_right[0] <= 85;
+--	block_bottom[0] <= 80;
+--	block_top[0] <= 70;
+--		  for(int i = 0; i <11; i++){
+--		      for(int j = 0; j < 6; j++){
+--			  if (display_bloc[i, j] = 1){
+--			      If(ball_x > block_left[i] and ball_x < block_right[i] and ball_y < block_bottom[j] + 1 and ball_y > block_bottom[j] -1) then
+--		display_bloc[i, j] <= 0;
+--		ball_up <= '0';
+--	elsif(ball_x > block_left[i] and ball_x < block_right[i] and ball_y + ball_height < block_top[j] - 1 and ball_y + ball_height > block_top[j] + 1) then
+--		display_bloc[i, j] <= 0;
+--		ball_up <= '1';
+--	elsif(ball_x + ball_width > block_left[i] - 1 and ball_x + ball_width < block_left[i] + 1 AND row < block_bottom[j] AND row > block_top[j]) then
+--		display_bloc[i, j] <= 0;
+--		ball_right <= '0';
+--	elsif(ball_x < block_right[i] + 1 and ball_x > block_right[i] - 1 AND row < block_bottom[j] AND row > block_top[j]) then
+--		display_bloc[i, j] <= 0;
+--		ball_right <= '1';
+--	end if;}
+--	}
+--			  }
+		      
+		      
+			      
 
 	 
 	 -----------------------------------------------------------------------------------------------
