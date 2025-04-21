@@ -1,0 +1,117 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+
+ENTITY fibonacci_hex_display IS
+    GENERIC (
+        FIB_MAX_VALUE : INTEGER := 1499999 -- Limit for sequence reset
+    );
+    PORT (
+        -- Inputs
+        clk         : IN  STD_LOGIC;
+        reset_sync  : IN  STD_LOGIC; -- Synchronous reset
+        fib_update  : IN  STD_LOGIC; -- Clock enable for sequence update
+
+        -- Outputs
+        HEX0        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX1        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX2        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX3        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX4        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX5        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
+    );
+END ENTITY fibonacci_hex_display;
+
+ARCHITECTURE Behavioral OF fibonacci_hex_display IS
+
+    -- Internal signals for Fibonacci sequence state
+    SIGNAL fib_current : INTEGER RANGE 0 TO FIB_MAX_VALUE := 1;
+    SIGNAL fib_next    : INTEGER RANGE 0 TO FIB_MAX_VALUE*2 := 1; -- Needs larger range potentially
+
+    -- Internal signals for HEX outputs to avoid multiple drivers in procedures
+    SIGNAL iHEX0 : STD_LOGIC_VECTOR(6 DOWNTO 0);
+    SIGNAL iHEX1 : STD_LOGIC_VECTOR(6 DOWNTO 0);
+    SIGNAL iHEX2 : STD_LOGIC_VECTOR(6 DOWNTO 0);
+    SIGNAL iHEX3 : STD_LOGIC_VECTOR(6 DOWNTO 0);
+    SIGNAL iHEX4 : STD_LOGIC_VECTOR(6 DOWNTO 0);
+    SIGNAL iHEX5 : STD_LOGIC_VECTOR(6 DOWNTO 0);
+
+    -- Helper function: Integer digit to 7-segment code
+    FUNCTION int_to_7seg (digit : INTEGER) RETURN STD_LOGIC_VECTOR IS
+        VARIABLE seg : STD_LOGIC_VECTOR(6 DOWNTO 0);
+    BEGIN
+        CASE digit MOD 10 IS -- Use MOD 10 to handle potential overflows safely
+            WHEN 0      => seg := "1000000"; -- 0
+            WHEN 1      => seg := "1111001"; -- 1
+            WHEN 2      => seg := "0100100"; -- 2
+            WHEN 3      => seg := "0110000"; -- 3
+            WHEN 4      => seg := "0011001"; -- 4
+            WHEN 5      => seg := "0010010"; -- 5
+            WHEN 6      => seg := "0000010"; -- 6
+            WHEN 7      => seg := "1111000"; -- 7
+            WHEN 8      => seg := "0000000"; -- 8
+            WHEN 9      => seg := "0010000"; -- 9
+            WHEN OTHERS => seg := "1111111"; -- Off
+        END CASE;
+        RETURN seg;
+    END FUNCTION int_to_7seg;
+
+BEGIN
+
+    -- Drive output ports from internal signals
+    HEX0 <= iHEX0;
+    HEX1 <= iHEX1;
+    HEX2 <= iHEX2;
+    HEX3 <= iHEX3;
+    HEX4 <= iHEX4;
+    HEX5 <= iHEX5;
+
+    -- Process to update the Fibonacci sequence
+    fib_sequence_proc : PROCESS (clk)
+        VARIABLE temp_fib : INTEGER := 1;
+    BEGIN
+        IF rising_edge(clk) THEN
+            IF reset_sync = '1' THEN
+                fib_current <= 1;
+                fib_next    <= 1;
+            ELSIF fib_update = '1' THEN
+                IF fib_current >= FIB_MAX_VALUE THEN
+                    fib_current <= 1;
+                    fib_next    <= 1;
+                ELSE
+                    -- Check for potential overflow before adding
+                    IF INTEGER'HIGH - fib_current < fib_next THEN
+                        -- Handle overflow: Reset sequence
+                        fib_current <= 1;
+                        fib_next <= 1;
+                    ELSE
+                        temp_fib    := fib_next;
+                        fib_next    <= fib_current + fib_next;
+                        fib_current <= temp_fib;
+                    END IF;
+                END IF;
+            END IF;
+        END IF;
+    END PROCESS fib_sequence_proc;
+
+    -- Process to update HEX displays based on current Fibonacci number
+    -- Combinational process: Updates whenever fib_current changes
+    hex_display_proc : PROCESS (fib_current)
+        VARIABLE temp_fib : INTEGER := 0;
+    BEGIN
+        temp_fib := fib_current;
+        -- Display digits from right (iHEX0) to left (iHEX5)
+        iHEX0 <= int_to_7seg(temp_fib MOD 10);
+        temp_fib := temp_fib / 10;
+        iHEX1 <= int_to_7seg(temp_fib MOD 10);
+        temp_fib := temp_fib / 10;
+        iHEX2 <= int_to_7seg(temp_fib MOD 10);
+        temp_fib := temp_fib / 10;
+        iHEX3 <= int_to_7seg(temp_fib MOD 10);
+        temp_fib := temp_fib / 10;
+        iHEX4 <= int_to_7seg(temp_fib MOD 10);
+        temp_fib := temp_fib / 10;
+        iHEX5 <= int_to_7seg(temp_fib MOD 10);
+    END PROCESS hex_display_proc;
+
+END ARCHITECTURE Behavioral;
