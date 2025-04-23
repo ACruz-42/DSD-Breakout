@@ -34,12 +34,12 @@ entity bout1 is
         blue_m       : out std_logic_vector(7 downto 0);
         
         -- Hex Output
-        HEX5         : out std_logic_vector(7 downto 0);
-        HEX4         : out std_logic_vector(7 downto 0);    
-        HEX3         : out std_logic_vector(7 downto 0);
-        HEX2         : out std_logic_vector(7 downto 0);
-        HEX1         : out std_logic_vector(7 downto 0);
-        HEX0         : out std_logic_vector(7 downto 0)
+        HEX5         : out std_logic_vector(6 downto 0);
+        HEX4         : out std_logic_vector(6 downto 0);    
+        HEX3         : out std_logic_vector(6 downto 0);
+        HEX2         : out std_logic_vector(6 downto 0);
+        HEX1         : out std_logic_vector(6 downto 0);
+        HEX0         : out std_logic_vector(6 downto 0)
     );
 end entity bout1;
 
@@ -98,12 +98,12 @@ architecture rtl of bout1 is
             red_m        : out std_logic_vector(7 downto 0);
             green_m      : out std_logic_vector(7 downto 0);
             blue_m       : out std_logic_vector(7 downto 0);
-				HEX0           : out STD_LOGIC_VECTOR(7 downto 0);
-				HEX1           : out STD_LOGIC_VECTOR(7 downto 0);
-				HEX2           : out STD_LOGIC_VECTOR(7 downto 0);
-				HEX3           : out STD_LOGIC_VECTOR(7 downto 0);
-				HEX4           : out STD_LOGIC_VECTOR(7 downto 0);
-				HEX5           : out STD_LOGIC_VECTOR(7 downto 0)
+				HEX0           : out STD_LOGIC_VECTOR(6 downto 0);
+				HEX1           : out STD_LOGIC_VECTOR(6 downto 0);
+				HEX2           : out STD_LOGIC_VECTOR(6 downto 0);
+				HEX3           : out STD_LOGIC_VECTOR(6 downto 0);
+				HEX4           : out STD_LOGIC_VECTOR(6 downto 0);
+				HEX5           : out STD_LOGIC_VECTOR(6 downto 0)
         );
     end component;
 
