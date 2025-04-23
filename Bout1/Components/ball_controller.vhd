@@ -37,12 +37,12 @@ ENTITY ball_controller IS
         ball_y      : OUT INTEGER;
         ball_ena    : OUT STD_LOGIC;
 		  game_over	  : OUT STD_LOGIC;
-		  HEX0		  : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
-		  HEX1		  : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-		  HEX2		  : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-		  HEX3		  : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-		  HEX4		  : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-		  HEX5	     : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+		  HEX0		  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0); 
+		  HEX1		  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+		  HEX2		  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+		  HEX3		  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+		  HEX4		  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+		  HEX5	     	  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
 		  
     );
 END ENTITY ball_controller;
@@ -58,27 +58,29 @@ ARCHITECTURE Behavioral OF ball_controller IS
 	 
 	 -- This is the amount of balls remaining ** For ball counting
 	 SIGNAL ball_count		 : INTEGER := 3;
+	 SIGNAL block_count		 : INTEGER := 0;
 	 
     -- 7-segment encoding function (active low, bits A-G,DP: 0=on)
-	 -- I think this isn't working? I'm not sure
-    function int_to_7seg(number : integer) return std_logic_vector is
-        variable seg_out : std_logic_vector(7 downto 0);  -- A B C D E F G DP
-    begin
-        case number is
-            when 0 => seg_out := "0000001" & '1';  -- 0
-            when 1 => seg_out := "1001111" & '1';  -- 1
-            when 2 => seg_out := "0010010" & '1';  -- 2
-            when 3 => seg_out := "0000110" & '1';  -- 3
-            when 4 => seg_out := "1001100" & '1';  -- 4
-            when 5 => seg_out := "0100100" & '1';  -- 5
-            when 6 => seg_out := "0100000" & '1';  -- 6
-            when 7 => seg_out := "0001111" & '1';  -- 7
-            when 8 => seg_out := "0000000" & '1';  -- 8
-            when 9 => seg_out := "0000100" & '1';  -- 9
-            when others => seg_out := "1111111" & '1'; -- all off
-        end case;
-        return seg_out;
-    end function;
+  function bcd_to_7seg(bcd : std_logic_vector(3 downto 0)) return std_logic_vector is
+    variable seg : std_logic_vector(6 downto 0);
+  begin
+    case bcd is
+      when "0000" => seg := "1000000"; -- 0
+      when "0001" => seg := "1111001"; -- 1
+      when "0010" => seg := "0100100"; -- 2
+      when "0011" => seg := "0110000"; -- 3
+      when "0100" => seg := "0011001"; -- 4
+      when "0101" => seg := "0010010"; -- 5
+      when "0110" => seg := "0000010"; -- 6
+      when "0111" => seg := "1111000"; -- 7
+      when "1000" => seg := "0000000"; -- 8
+      when "1001" => seg := "0010000"; -- 9
+      when others => seg := "1111111"; -- blank
+    end case;
+	 
+    return seg;
+	 
+  end function;
 
 BEGIN
 
@@ -108,8 +110,9 @@ BEGIN
                 current_ball_dx <= BALL_START_DX;
                 current_ball_dy <= BALL_START_DY;
                 current_ball_ena <= '1';
-					 ball_count <= 3;
-					 game_over <= '0';
+		ball_count <= 3;
+		game_over <= '0';
+		block_count <= 0;
 
                 -- Initialize all blocks
                 FOR r IN blocks_temp'RANGE(1) LOOP
@@ -233,9 +236,45 @@ BEGIN
 					 -- If we've hit a block, return new blocks state.
                 IF block_hit THEN
                     blocks <= blocks_temp;
+			 IF current_ball_y < 450 THEN
+				 
+				 block_count <= block_count + 1;	
+
+			END IF;
                 END IF;
             END IF;
         END IF;
     END PROCESS ball_proc;
+
+		
+process(block_count, ball_count)
+    variable tens_digit_block : std_logic_vector(3 downto 0);
+    variable ones_digit_block : std_logic_vector(3 downto 0);
+    variable tens_digit_ball : std_logic_vector(3 downto 0);
+    variable ones_digit_ball : std_logic_vector(3 downto 0);
+begin
+
+    tens_digit_block := std_logic_vector(to_unsigned(block_count / 10, 4));
+    ones_digit_block := std_logic_vector(to_unsigned(block_count mod 10, 4));
+	 
+    tens_digit_ball := std_logic_vector(to_unsigned(ball_count / 10, 4));
+    ones_digit_ball := std_logic_vector(to_unsigned(ball_count mod 10, 4));
+
+    hex0 <= bcd_to_7seg(ones_digit_block);
+    hex1 <= bcd_to_7seg(tens_digit_block);
+	 
+	 hex4 <= bcd_to_7seg(ones_digit_ball);
+	 hex5 <= bcd_to_7seg(tens_digit_ball);
+	 
+	 hex2 <= "1111111"; 
+	 hex3 <= "1111111";
+
+	-- ****************************************NEEDS WORK
+	-- IF block_count > 83 THEN
+	--	ball_ena <= '0';
+	-- END IF;
+		
+	 
+end process;
 
 END ARCHITECTURE Behavioral;
