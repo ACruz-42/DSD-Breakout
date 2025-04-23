@@ -55,12 +55,12 @@ ENTITY hw_image_generator IS
         red         : OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
         green       : OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
         blue        : OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
-        HEX0        : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-        HEX1        : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-        HEX2        : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-        HEX3        : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-        HEX4        : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-        HEX5        : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+        HEX0        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX1        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX2        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX3        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX4        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        HEX5        : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
     );
 END hw_image_generator;
 
@@ -69,7 +69,7 @@ ARCHITECTURE behavior OF hw_image_generator IS
     -- Signals for game elements state
     SIGNAL blocks 	: block_array_type(0 TO NUM_ROWS - 1, 0 TO BLOCKS_PER_ROW - 1); -- Holds state of all blocks
     SIGNAL paddle 	: block_type; -- Paddle position and state
-	 SIGNAL game_over : STD_LOGIC; -- Fed in from ball controller, alternate reset_sync conditional 
+    SIGNAL game_over    : STD_LOGIC; -- Fed in from ball controller, alternate reset_sync conditional 
 
     -- Signals connecting to/from components
     SIGNAL ball_x   : INTEGER; -- Output from ball_controller
