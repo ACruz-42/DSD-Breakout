@@ -36,12 +36,12 @@ entity vga_top is
 		blue_m     :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0'); --blue magnitude output to DAC
 		
 		
-		HEX0           : out STD_LOGIC_VECTOR(7 downto 0);
-		HEX1           : out STD_LOGIC_VECTOR(7 downto 0);
-		HEX2           : out STD_LOGIC_VECTOR(7 downto 0);
-		HEX3           : out STD_LOGIC_VECTOR(7 downto 0);
-		HEX4           : out STD_LOGIC_VECTOR(7 downto 0);
-		HEX5           : out STD_LOGIC_VECTOR(7 downto 0)
+		HEX0           : out STD_LOGIC_VECTOR(6 downto 0);
+		HEX1           : out STD_LOGIC_VECTOR(6 downto 0);
+		HEX2           : out STD_LOGIC_VECTOR(6 downto 0);
+		HEX3           : out STD_LOGIC_VECTOR(6 downto 0);
+		HEX4           : out STD_LOGIC_VECTOR(6 downto 0);
+		HEX5           : out STD_LOGIC_VECTOR(6 downto 0)
 	
 	);
 	
@@ -70,7 +70,7 @@ architecture vga_structural of vga_top is
 			v_sync		:	OUT	STD_LOGIC;	--vertical sync pulse
 			disp_ena	:	OUT	STD_LOGIC;	--display enable ('1' = display time, '0' = blanking time)
 			column		:	OUT	INTEGER;	--horizontal pixel coordinate
-			row			:	OUT	INTEGER;	--vertical pixel coordinate
+			row		:	OUT	INTEGER;	--vertical pixel coordinate
 			n_blank		:	OUT	STD_LOGIC;	--direct blacking output to DAC
 			n_sync		:	OUT	STD_LOGIC   --sync-on-green output to DAC
 		
@@ -82,21 +82,21 @@ architecture vga_structural of vga_top is
 	
 		port(
 		
-			disp_ena :  IN  STD_LOGIC;  --display enable ('1' = display time, '0' = blanking time)
-			row      :  IN  INTEGER;    --row pixel coordinate
-			column   :  IN  INTEGER;    --column pixel coordinate
-			paddle_move : IN INTEGER;
+			disp_ena 	:  IN  STD_LOGIC;  --display enable ('1' = display time, '0' = blanking time)
+			row      	:  IN  INTEGER;    --row pixel coordinate
+			column  	:  IN  INTEGER;    --column pixel coordinate
+			paddle_move 	: IN INTEGER;
 			clk		: IN STD_LOGIC;
 			reset		: IN STD_LOGIC;
-			red      :  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');  --red magnitude output to DAC
-			green    :  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');  --green magnitude output to DAC
-			blue     :  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');   --blue magnitude output to DAC
-			HEX0          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-			HEX1          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-		   HEX2          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-			HEX3          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-		   HEX4          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-			HEX5          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+			red     	:  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');  --red magnitude output to DAC
+			green    	:  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');  --green magnitude output to DAC
+			blue     	:  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');   --blue magnitude output to DAC
+			HEX0          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+			HEX1          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+		  	HEX2          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+			HEX3          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+		   	HEX4          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+			HEX5          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
 		
 		);
 		
