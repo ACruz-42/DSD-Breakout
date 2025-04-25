@@ -1,4 +1,4 @@
--- Alex Cruz
+--Alex Cruz
 -- 4/13/2025
 -- Created for HW7, adapted for PE2
 -- Credits:
@@ -12,6 +12,8 @@ use ieee.numeric_std.all;
 
 entity bout1 is
     port (
+		
+	key0			: in std_logic; 
         -- Clock and Reset
         pixel_clk_m  : in std_logic;                     
         reset_n_m    : in std_logic;                     
@@ -88,11 +90,12 @@ architecture rtl of bout1 is
         );
     end component;
 
-    component vga_top is
+    component vga_top_level is
         port (
             pixel_clk_m  : in std_logic;
             reset_n_m    : in std_logic;
             paddle_move  : in integer;
+				key0			 : in std_logic;
             h_sync_m     : out std_logic;
             v_sync_m     : out std_logic;
             red_m        : out std_logic_vector(7 downto 0);
@@ -118,11 +121,12 @@ begin
         );
 
     -- VGA output
-    vga_top_inst : vga_top
+    vga_top_inst : vga_top_level
         port map (
             pixel_clk_m => pixel_clk_m,
             reset_n_m   => reset_n_m,
             paddle_move => paddle_pos,
+				key0 => key0,
             h_sync_m    => h_sync_m,
             v_sync_m    => v_sync_m,
             red_m       => red_m,
