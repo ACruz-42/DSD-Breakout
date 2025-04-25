@@ -42,7 +42,7 @@ ENTITY ball_controller IS
 		  HEX2		  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
 		  HEX3		  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
 		  HEX4		  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
-		  HEX5	     	  : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
+		  HEX5	     : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
 		  
     );
 END ENTITY ball_controller;
@@ -60,7 +60,7 @@ ARCHITECTURE Behavioral OF ball_controller IS
 	 SIGNAL ball_count		 : INTEGER := 3;
 	 SIGNAL block_count		 : INTEGER := 0;
 	 
-    -- 7-segment encoding function (active low, bits A-G,DP: 0=on)
+    -- 7-segment encoding function (active low)
   function bcd_to_7seg(bcd : std_logic_vector(3 downto 0)) return std_logic_vector is
     variable seg : std_logic_vector(6 downto 0);
   begin
@@ -81,6 +81,10 @@ ARCHITECTURE Behavioral OF ball_controller IS
     return seg;
 	 
   end function;
+  
+  
+  
+
 
 BEGIN
 
@@ -110,9 +114,9 @@ BEGIN
                 current_ball_dx <= BALL_START_DX;
                 current_ball_dy <= BALL_START_DY;
                 current_ball_ena <= '1';
-		ball_count <= 3;
-		game_over <= '0';
-		block_count <= 0;
+					 ball_count <= 3;
+					 game_over <= '0';
+					 block_count <= 0;
 
                 -- Initialize all blocks
                 FOR r IN blocks_temp'RANGE(1) LOOP
@@ -127,14 +131,18 @@ BEGIN
                     END LOOP;
                 END LOOP;
                 blocks <= blocks_temp;
+					 
+					 
 				
 				-- If the game is going, we calculate the next position and check for collisions
-            ELSIF ball_update = '1' AND current_ball_ena = '1' THEN
+            ELSIF ball_update = '1' AND current_ball_ena = '1' THEN -- CURR BALL ENABLE = 1 WAS HERE
                 next_ball_x := current_ball_x + current_ball_dx;
                 next_ball_y := current_ball_y + current_ball_dy;
                 next_dx := current_ball_dx;
                 next_dy := current_ball_dy;
                 block_hit := FALSE;
+
+		
 
                 -- Wall Collisions
                 IF (next_ball_x <= LEFT_BORDER) OR (next_ball_x + BALL_SIZE >= RIGHT_BORDER) THEN
@@ -154,8 +162,12 @@ BEGIN
                     next_dx := BALL_START_DX;
                     next_dy := BALL_START_DY;
 
-						  IF (ball_count - 1 = 0) THEN
+						  
+						  IF (ball_count = 0) THEN 
+						  
 								game_over <= '1';
+								
+
 						  ELSE
 								ball_count <= ball_count - 1;
 						  END IF;
@@ -166,7 +178,7 @@ BEGIN
                             blocks_temp(r,c).enabled := '1';
                         END LOOP;
                     END LOOP;
-                    block_hit := TRUE;
+                  --  block_hit := TRUE;
                 END IF;
 
                 -- Paddle Collision
@@ -225,39 +237,38 @@ BEGIN
                 current_ball_dx <= next_dx;
                 current_ball_dy <= next_dy;
 					
-					 -- These were me testing with the 7segments, I'm having a lot of trouble with mine for some reason
---					 HEX0 <= int_to_7seg(0);
---					 HEX1 <= int_to_7seg(1);
---					 HEX2 <= int_to_7seg(2);
---					 HEX3 <= int_to_7seg(3);
---					 HEX4 <= int_to_7seg(4);
---					 HEX5 <= int_to_7seg(5);
+
 	
 					 -- If we've hit a block, return new blocks state.
                 IF block_hit THEN
                     blocks <= blocks_temp;
-			 IF current_ball_y < 450 THEN
-				 
-				 block_count <= block_count + 1;	
-
-			END IF;
-                END IF;
+						  IF current_ball_y < 450 THEN
+						  
+								block_count <= block_count + 1;
+						  
+								IF block_count + 1 > 9 THEN -- FROZE SCREEN, MADE BLOCK COUNT WEIRD
+						 
+										game_over <= '1';
+			
+								END IF;
+						 
+						END IF;
+					 END IF;
             END IF;
         END IF;
     END PROCESS ball_proc;
-
-		
-process(block_count, ball_count)
+	 
+	 process(block_count, ball_count)
     variable tens_digit_block : std_logic_vector(3 downto 0);
     variable ones_digit_block : std_logic_vector(3 downto 0);
-    variable tens_digit_ball : std_logic_vector(3 downto 0);
+	 variable tens_digit_ball : std_logic_vector(3 downto 0);
     variable ones_digit_ball : std_logic_vector(3 downto 0);
 begin
 
     tens_digit_block := std_logic_vector(to_unsigned(block_count / 10, 4));
     ones_digit_block := std_logic_vector(to_unsigned(block_count mod 10, 4));
 	 
-    tens_digit_ball := std_logic_vector(to_unsigned(ball_count / 10, 4));
+	 tens_digit_ball := std_logic_vector(to_unsigned(ball_count / 10, 4));
     ones_digit_ball := std_logic_vector(to_unsigned(ball_count mod 10, 4));
 
     hex0 <= bcd_to_7seg(ones_digit_block);
@@ -268,11 +279,10 @@ begin
 	 
 	 hex2 <= "1111111"; 
 	 hex3 <= "1111111";
-
-	-- ****************************************NEEDS WORK
-	-- IF block_count > 83 THEN
-	--	ball_ena <= '0';
-	-- END IF;
+	 
+--	 IF block_count > 13 THEN  -- if blocks are all gone
+--		CURRENT_ball_ena <= '0';
+--	 END IF;
 		
 	 
 end process;
