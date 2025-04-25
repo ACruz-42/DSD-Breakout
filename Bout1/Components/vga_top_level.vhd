@@ -15,15 +15,17 @@
 library   ieee;
 use       ieee.std_logic_1164.all;
 
-entity vga_top is
+entity vga_top_level is
 	
 	port(
 	
+
 		-- Inputs for image generation
 		
 		pixel_clk_m		:	IN	STD_LOGIC;     -- pixel clock for VGA mode being used 
 		reset_n_m		:	IN	STD_LOGIC; --active low asycnchronous reset
-		paddle_move     :  IN integer;
+		paddle_move    :  IN integer;
+		key0				: IN  STD_LOGIC;
 		
 	
 		-- Outputs for image generation 
@@ -45,9 +47,9 @@ entity vga_top is
 	
 	);
 	
-end vga_top;
+end vga_top_level;
 
-architecture vga_structural of vga_top is
+architecture vga_structural of vga_top_level is
 
 	component vga_pll_25_175 is 
 	
@@ -70,7 +72,7 @@ architecture vga_structural of vga_top is
 			v_sync		:	OUT	STD_LOGIC;	--vertical sync pulse
 			disp_ena	:	OUT	STD_LOGIC;	--display enable ('1' = display time, '0' = blanking time)
 			column		:	OUT	INTEGER;	--horizontal pixel coordinate
-			row		:	OUT	INTEGER;	--vertical pixel coordinate
+			row			:	OUT	INTEGER;	--vertical pixel coordinate
 			n_blank		:	OUT	STD_LOGIC;	--direct blacking output to DAC
 			n_sync		:	OUT	STD_LOGIC   --sync-on-green output to DAC
 		
@@ -82,25 +84,28 @@ architecture vga_structural of vga_top is
 	
 		port(
 		
-			disp_ena 	:  IN  STD_LOGIC;  --display enable ('1' = display time, '0' = blanking time)
-			row      	:  IN  INTEGER;    --row pixel coordinate
-			column  	:  IN  INTEGER;    --column pixel coordinate
-			paddle_move 	: IN INTEGER;
+			disp_ena :  IN  STD_LOGIC;  --display enable ('1' = display time, '0' = blanking time)
+			row      :  IN  INTEGER;    --row pixel coordinate
+			column   :  IN  INTEGER;    --column pixel coordinate
+			paddle_move : IN INTEGER;
 			clk		: IN STD_LOGIC;
 			reset		: IN STD_LOGIC;
-			red     	:  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');  --red magnitude output to DAC
-			green    	:  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');  --green magnitude output to DAC
-			blue     	:  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');   --blue magnitude output to DAC
+			key0		: IN  STD_LOGIC;
+			red      :  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');  --red magnitude output to DAC
+			green    :  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');  --green magnitude output to DAC
+			blue     :  OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');   --blue magnitude output to DAC
 			HEX0          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
 			HEX1          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
-		  	HEX2          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+		   HEX2          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
 			HEX3          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
-		   	HEX4          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+		   HEX4          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
 			HEX5          : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
 		
 		);
 		
 	end component;
+	
+
 	
 	signal pll_OUT_to_vga_controller_IN, dispEn : STD_LOGIC;
 	signal rowSignal, colSignal : INTEGER;
@@ -118,6 +123,7 @@ begin
     paddle_move => paddle_move,
     clk => pixel_clk_m,
     reset => reset_n_m,
+    key0 => key0,
     red => red_m,
     green => green_m,
     blue => blue_m,
@@ -126,7 +132,9 @@ begin
     HEX2 => HEX2,
     HEX3 => HEX3,
     HEX4 => HEX4,
-    HEX5 => HEX5
-);
+    HEX5 => HEX5);
+	 
+	
+
 
 end vga_structural;
