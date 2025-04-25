@@ -1,3 +1,4 @@
+
 -- Refactored version using ball_controller and fibonacci_hex_display components
 ----------------------------------------------
 -- Alex Cruz for PE2 (with further modifications)
@@ -29,7 +30,7 @@ ENTITY hw_image_generator IS
         BALL_START_DX : INTEGER := 3;
         BALL_START_DY : INTEGER := 3;
         -- Block layout constants
-        NUM_ROWS        : INTEGER := 2;
+        NUM_ROWS        : INTEGER := 1;  -- CHANGED FOR TESTING 
         BLOCKS_PER_ROW  : INTEGER := 14;
         BLOCK_WIDTH     : INTEGER := 35;
         BLOCK_HEIGHT    : INTEGER := 10;
@@ -51,6 +52,7 @@ ENTITY hw_image_generator IS
         paddle_move : IN  INTEGER; -- Center of paddle
         clk         : IN  STD_LOGIC;
         reset       : IN  STD_LOGIC; -- Active-low reset
+		  key0		  : IN  STD_LOGIC;
         -- Outputs
         red         : OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
         green       : OUT STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
@@ -69,7 +71,7 @@ ARCHITECTURE behavior OF hw_image_generator IS
     -- Signals for game elements state
     SIGNAL blocks 	: block_array_type(0 TO NUM_ROWS - 1, 0 TO BLOCKS_PER_ROW - 1); -- Holds state of all blocks
     SIGNAL paddle 	: block_type; -- Paddle position and state
-    SIGNAL game_over    : STD_LOGIC; -- Fed in from ball controller, alternate reset_sync conditional 
+	 SIGNAL game_over : STD_LOGIC; -- Fed in from ball controller, alternate reset_sync conditional 
 
     -- Signals connecting to/from components
     SIGNAL ball_x   : INTEGER; -- Output from ball_controller
@@ -82,6 +84,7 @@ ARCHITECTURE behavior OF hw_image_generator IS
     SIGNAL ball_clk_counter : INTEGER := 0;
     SIGNAL ball_update      : STD_LOGIC := '0';
     SIGNAL reset_sync       : STD_LOGIC := '1'; -- Synchronized reset signal
+	 SIGNAL ball_clk_enable  : STD_LOGIC := '0';
 
     -- Internal signal for clamped paddle position
     SIGNAL clamped_paddle_pos : INTEGER;
@@ -106,12 +109,30 @@ BEGIN
     -- Process to synchronize reset and generate updates for ball and prng (called fib)
     timing_proc : PROCESS (clk, reset, game_over)
     BEGIN
-        IF reset = '0' or game_over = '1' THEN
+	 
+	 	IF key0 = '0' THEN 
+		
+			ball_clk_enable <= '1';
+			
+		END IF;
+		
+        IF reset = '0' THEN
             fib_clk_counter  <= 0;
             fib_update       <= '0';
             ball_clk_counter <= 0;
             ball_update      <= '0';
             reset_sync       <= '1';
+				
+				
+				
+		ELSIF game_over = '1' THEN
+            fib_clk_counter  <= 0;
+            fib_update       <= '0';
+            ball_clk_counter <= 0;
+            ball_update      <= '0';
+            ball_clk_enable   <= '0';
+	
+				
         ELSIF rising_edge(clk) THEN
             reset_sync <= '0';
 
@@ -123,8 +144,12 @@ BEGIN
                 fib_clk_counter <= fib_clk_counter + 1;
                 fib_update      <= '0';
             END IF;
-
+			
+			
+			
             -- Ball Clock Divider
+			IF ball_clk_enable = '1' THEN
+				
             IF ball_clk_counter >= BALL_CLK_DIVIDER - 1 THEN
                 ball_clk_counter <= 0;
                 ball_update      <= '1';
@@ -132,7 +157,13 @@ BEGIN
                 ball_clk_counter <= ball_clk_counter + 1;
                 ball_update      <= '0';
             END IF;
+			ELSE 
+				
+				ball_update      <= '0';
+				
         END IF;
+		  
+	END IF;
     END PROCESS timing_proc;
 
 
