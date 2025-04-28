@@ -1,0 +1,70 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+
+PACKAGE block_definitions_pkg IS
+
+    -- == Constants defining default block layout ==
+    -- These can be overridden by generics in the component
+    CONSTANT DEFAULT_NUM_ROWS       : INTEGER := 2;
+    CONSTANT DEFAULT_BLOCKS_PER_ROW : INTEGER := 14;
+    CONSTANT DEFAULT_BLOCK_WIDTH    : INTEGER := 35;
+    CONSTANT DEFAULT_BLOCK_HEIGHT   : INTEGER := 10;
+    CONSTANT DEFAULT_BLOCK_SPACE_X  : INTEGER := 5;
+    CONSTANT DEFAULT_BLOCK_SPACE_Y  : INTEGER := 5;
+    CONSTANT DEFAULT_START_X        : INTEGER := 35;
+    CONSTANT DEFAULT_START_Y        : INTEGER := 50;
+    CONSTANT DEFAULT_FIB_MAX_VALUE  : INTEGER := 10000; -- Example max value
+
+    -- == Type Definitions ==
+    TYPE block_type IS RECORD
+        x_min   : INTEGER;
+        x_max   : INTEGER;
+        y_min   : INTEGER;
+        y_max   : INTEGER;
+        enabled : STD_LOGIC;
+    END RECORD block_type;
+
+    -- Define array types based on constants (or generics where instantiated)
+    -- Note: For generic components, the exact dimensions used will depend
+    -- on the generics passed during instantiation. These definitions
+    -- provide the structure.
+    TYPE block_array_type IS ARRAY (INTEGER RANGE <>, INTEGER RANGE <>) OF block_type;
+    TYPE rowcol_vector IS ARRAY (0 TO 1) OF INTEGER;
+
+    -- == Helper Function Declaration ==
+    -- Converts a flat index to a (row, column) pair
+    FUNCTION flat_to_rowcol (
+        flat_index     : IN INTEGER;
+        blocks_per_row : IN INTEGER -- Pass dimension explicitly
+    ) RETURN rowcol_vector;
+
+END PACKAGE block_definitions_pkg;
+
+-- --- Package Body ---
+
+PACKAGE BODY block_definitions_pkg IS
+
+    -- == Helper Function Implementation ==
+    FUNCTION flat_to_rowcol (
+        flat_index     : IN INTEGER;
+        blocks_per_row : IN INTEGER
+    ) RETURN rowcol_vector IS
+        VARIABLE row    : INTEGER := 0;
+        VARIABLE col    : INTEGER := 0;
+        VARIABLE result : rowcol_vector;
+    BEGIN
+        IF blocks_per_row > 0 THEN
+            row := flat_index / blocks_per_row;
+            col := flat_index MOD blocks_per_row;
+        ELSE
+            -- Handle division by zero or invalid input, maybe return (-1, -1) or assert
+            row := -1; -- Indicate error or default
+            col := -1;
+        END IF;
+        result(0) := row;
+        result(1) := col;
+        RETURN result;
+    END FUNCTION flat_to_rowcol;
+
+END PACKAGE BODY block_definitions_pkg;
